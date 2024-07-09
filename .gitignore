@@ -1,0 +1,10 @@
+*
+!.gitignore
+!wp-content/
+!wp-content/plugins/
+!wp-content/plugins/DATables/
+!wp-content/plugins/DATables/*
+!wp-content/plugins/DATables/css/
+!wp-content/plugins/DATables/css/*
+!wp-content/plugins/DATables/js/
+!wp-content/plugins/DATables/js/*
