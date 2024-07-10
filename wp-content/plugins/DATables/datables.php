@@ -46,7 +46,12 @@ function render_datables_settings_page() {
 function datables_settings_init() {
     register_setting(
         'datables-settings-group',
-        'datables_platform_url'
+        'datables_departures_platform_url'
+    );
+
+    register_setting(
+        'datables-settings-group',
+        'datables_arrivals_platform_url'
     );
 
     register_setting(
@@ -62,7 +67,8 @@ function datables_settings_init() {
     );
 
     $fields = array(
-        'datables_platform_url' => 'Platform URL',
+        'datables_departures_platform_url' => 'Departures Platform URL',
+        'datables_arrivals_platform_url' => 'Arrivals Platform URL',
         'datables_api_key' => 'DATables API Key',
     );
 
@@ -102,27 +108,47 @@ function datables_enqueue_scripts() {
     wp_enqueue_script('datables-script', 'js/datables.js', array('jquery'), null, true);
     wp_enqueue_style('styles', plugin_dir_url(__FILE__) . 'css/styles.css');
 
-    $platform_url = get_option('datables_platform_url');
+    $departures_platform_url = get_option('datables_departures_platform_url');
+    $arrivals_platform_url = get_option('datables_arrivals_platform_url');
     $api_key = get_option('datables_api_key');
     
     wp_localize_script('datables-script', 'datablesData', array(
-        'platformUrl' => $platform_url,
+        'departuresPlatformUrl' => $departures_platform_url,
+        'arrivalsPlatformUrl' => $arrivals_platform_url,
         'apiKey' => $api_key
     ));
 }
 add_action('wp_enqueue_scripts', 'datables_enqueue_scripts');
 
-function departures_table_function() 
+function departures_table_function($atts) 
 {
+    $atts = shortcode_atts(
+        array(
+            'crs' => '',
+        ),
+        $atts,
+        'departures-table'
+    );
+    $crs = esc_attr($atts['crs']);
+
     return '<div class="loading-message">Loading...</div>
-            <table id="departures-table" class="display"></table>';
+            <table id="departures-table" class="display" data-crs="' . $crs . '"></table>';
 }
 add_shortcode('departures-table', 'departures_table_function');
 
-function arrivals_table_function() 
+function arrivals_table_function($atts) 
 {
+    $atts = shortcode_atts(
+        array(
+            'crs' => '',
+        ),
+        $atts,
+        'arrivals-table'
+    );
+    $crs = esc_attr($atts['crs']);
+
     return '<div class="loading-message">Loading...</div>
-            <table id="arrivals-table" class="display"></table>';
+            <table id="arrivals-table" class="display" data-crs="' . $crs . '"></table>';
 }
 add_shortcode('arrivals-table', 'arrivals_table_function');
 
