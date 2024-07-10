@@ -11,9 +11,9 @@ function datables_menu() {
         'DATables Settings',
         'DATables',
         'manage_options',
-        'wcrm-settings',
+        'datables-settings',
         'render_datables_settings_page',
-        'https://cdn-icons-png.flaticon.com/256/1008/1008048.png'
+        //'https://cdn-icons-png.flaticon.com/256/1008/1008048.png'
     );
 
     add_submenu_page(
@@ -26,7 +26,6 @@ function datables_menu() {
     );
 }
 
-// Render the WCRM settings page
 function render_datables_settings_page() {
     ?>
     <div class="wrap">
@@ -44,89 +43,56 @@ function render_datables_settings_page() {
     <?php
 }
 
-// Register settings and add custom fields for WCRM
-function wcrm_settings_init() {
+function datables_settings_init() {
     register_setting(
-        'wcrm-settings-group',
-        'wcrm_platform_url'
+        'datables-settings-group',
+        'datables_platform_url'
     );
+
     register_setting(
-        'wcrm-settings-group',
-        'wcrm_registration_email'
-    );
-    register_setting(
-        'wcrm-settings-group',
-        'wcrm_client_secret'
-    );
-    register_setting(
-        'wcrm-settings-group',
-        'wcrm_password'
-    );
-    register_setting(
-        'wcrm-settings-group',
-        'wcrm_status'
+        'datables-settings-group',
+        'datables_api_key'
     );
 
     add_settings_section(
-        'wcrm-settings-section',
-        'WCRM Settings',
-        'wcrm_settings_section_callback',
-        'wcrm-settings'
+        'datables-settings-section',
+        'DATables Settings',
+        'datables_settings_section_callback',
+        'datables-settings'
     );
 
     $fields = array(
-        'wcrm_platform_url' => 'Platform URL',
-        'wcrm_registration_email' => 'Registation Email Address',
-        'wcrm_client_secret' => 'Client Secret',
-        'wcrm_password' => 'Password',
-        'wcrm_status' => 'Status',
+        'datables_platform_url' => 'Platform URL',
+        'datables_api_key' => 'DATables API Key',
     );
 
     foreach ($fields as $field_key => $field_label) {
         add_settings_field(
             $field_key,
             $field_label,
-            'wcrm_field_callback',
-            'wcrm-settings',
-            'wcrm-settings-section',
+            'datables_field_callback',
+            'datables-settings',
+            'datables-settings-section',
             array('field_key' => $field_key)
         );
     }
 }
 
-// Callback function for rendering custom fields for WCRM
-function wcrm_field_callback($args) {
+function datables_field_callback($args) {
     $field_key = $args['field_key'];
     $value = get_option($field_key);
 
-    if ($field_key === 'wcrm_password') {
-        echo '<input type="password" name="' . esc_attr($field_key) . '" value="' . esc_attr($value) . '" />';
-    } elseif ($field_key === 'wcrm_status') {
-        $options = array(
-            'active' => 'Active',
-            'inactive' => 'Inactive',
-        );
-
-        echo '<select name="' . esc_attr($field_key) . '">';
-        foreach ($options as $option_value => $option_label) {
-            echo '<option value="' . esc_attr($option_value) . '" ' . selected($value, $option_value, false) . '>' . esc_html($option_label) . '</option>';
-        }
-        echo '</select>';
-    } else {
-        echo '<input type="text" name="' . esc_attr($field_key) . '" value="' . esc_attr($value) . '" />';
-    }
+    echo '<input type="text" name="' . esc_attr($field_key) . '" value="' . esc_attr($value) . '" />';
 }
 
-// Callback function for the settings section
-function wcrm_settings_section_callback() {
-    echo '<p>Configure WCRM settings below:</p>';
+function datables_settings_section_callback() {
+    echo '<p>Configure DATables settings below:</p>';
 }
 
-// Hook into WordPress actions for WCRM
-add_action('admin_menu', 'wcrm_menu');
-add_action('admin_init', 'wcrm_settings_init');
+add_action('admin_menu', 'datables_menu');
+add_action('admin_init', 'datables_settings_init');
 
-function wcrm_enqueue_scripts() {
+function datables_enqueue_scripts() {
 
     wp_enqueue_script('jquery');
     wp_enqueue_script('datatables', '//cdn.datatables.net/2.0.8/js/dataTables.min.js', array('jquery'), '1.11.10', true);
@@ -141,7 +107,7 @@ function wcrm_enqueue_scripts() {
         // 'platformUrl' => $platform_url
     ));
 }
-add_action('wp_enqueue_scripts', 'wcrm_enqueue_scripts');
+add_action('wp_enqueue_scripts', 'datables_enqueue_scripts');
 
 function departures_table_function() 
 {
