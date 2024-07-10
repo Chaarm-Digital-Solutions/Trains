@@ -3,7 +3,8 @@ jQuery(document).ready(function ($)
         $('.loading-message').show();
 
         var crs = 'BUG';
-        var baseDepUrl
+        var platformUrl;
+        var apiKey;
         // Define your DataTable configuration for spids
         var dataTableConfigDepatrures = 
         {
@@ -11,7 +12,12 @@ jQuery(document).ready(function ($)
             serverSide: true,
             ajax: 
             {
-                'url': ''
+                'url': baseDepUrl + '/api/20220120/GetDepBoardWithDetails/' + crs + '?numRows=10&filterType=to&timeOffset=0&timeWindow=120',
+                'type': 'GET',
+                'beforeSend': function(xhr)
+                {
+                    xhr.setRequestHeader('x-apikey', apiKey)
+                }
             },
             columns: 
             [

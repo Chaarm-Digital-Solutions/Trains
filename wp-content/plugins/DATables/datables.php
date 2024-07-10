@@ -101,10 +101,13 @@ function datables_enqueue_scripts() {
     wp_enqueue_script('datables', plugins_url('js/datables.js', __FILE__), array('jquery', 'datables'), '1.0', true);
     wp_enqueue_script('datables-script', 'js/datables.js', array('jquery'), null, true);
     wp_enqueue_style('styles', plugin_dir_url(__FILE__) . 'css/styles.css');
+
+    $platform_url = get_option('datables_platform_url');
+    $api_key = get_option('datables_api_key');
     
     wp_localize_script('datables-script', 'datablesData', array(
-        // 'billingReferencesArray' => $billing_references_array,
-        // 'platformUrl' => $platform_url
+        'platformUrl' => $platform_url,
+        'apiKey' => $api_key
     ));
 }
 add_action('wp_enqueue_scripts', 'datables_enqueue_scripts');
