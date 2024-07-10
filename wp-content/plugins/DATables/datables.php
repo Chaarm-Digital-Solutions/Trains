@@ -2,7 +2,7 @@
 /*
 Plugin Name: DATables
 Description: Plugin displaying datatables for departures and arrivals from the selected train stations
-Version: 0.1
+Version: 1.0
 Author: Chaarm Digital Solutions
 */
 

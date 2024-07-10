@@ -24,13 +24,23 @@ jQuery(document).ready(function ($)
                 'beforeSend': function(xhr)
                 {
                     xhr.setRequestHeader('x-apikey', departuresApiKey)
+                },
+                'dataSrc': function(json) {
+                    // Adjust this function based on your API response structure
+                    return json.trainServices || []; // Assuming the data is in a 'trainServices' array
                 }
             },
             columns: 
             [
                 { data: 'operatorCode', title: 'Operator' },
                 { data: 'std', title: 'Due' },
-                { data: 'destination.locationName' + 'destination.via', title: 'Destination' },
+                { 
+                    data: null, 
+                    title: 'Destination',
+                    render: function(data, type, row) {
+                        return data.destination[0].locationName + (data.destination[0].via ? ' ' + data.destination[0].via : '');
+                    }
+                },
                 { data: 'platform', title: 'Platform' },
                 { data: 'etd', title: 'Expected' },
                 { data: 'length', title: 'Coaches' },
@@ -54,15 +64,25 @@ jQuery(document).ready(function ($)
                 'beforeSend': function(xhr)
                 {
                     xhr.setRequestHeader('x-apikey', arrivalsApiKey)
+                },
+                'dataSrc': function(json) {
+                    // Adjust this function based on your API response structure
+                    return json.trainServices || []; // Assuming the data is in a 'trainServices' array
                 }
             },
             columns: 
             [
                 { data: 'operatorCode', title: 'Operator' },
-                { data: 'std', title: 'Due' },
-                { data: 'destination.locationName' + 'destination.via', title: 'Destination' },
+                { data: 'sta', title: 'Due' },
+                { 
+                    data: null, 
+                    title: 'Origin',
+                    render: function(data, type, row) {
+                        return data.origin[0].locationName;
+                    }
+                },
                 { data: 'platform', title: 'Platform' },
-                { data: 'etd', title: 'Expected' },
+                { data: 'eta', title: 'Expected' },
                 { data: 'length', title: 'Coaches' },
             ],
             pageLength: 25,
