@@ -56,7 +56,12 @@ function datables_settings_init() {
 
     register_setting(
         'datables-settings-group',
-        'datables_api_key'
+        'datables_departures_api_key'
+    );
+
+    register_setting(
+        'datables-settings-group',
+        'datables_arrivals_api_key'
     );
 
     add_settings_section(
@@ -69,7 +74,8 @@ function datables_settings_init() {
     $fields = array(
         'datables_departures_platform_url' => 'Departures Platform URL',
         'datables_arrivals_platform_url' => 'Arrivals Platform URL',
-        'datables_api_key' => 'DATables API Key',
+        'datables_departures_api_key' => 'DATables Departures API Key',
+        'datables_arrivals_api_key' => 'DATables Arrivals API Key',
     );
 
     foreach ($fields as $field_key => $field_label) {
@@ -108,12 +114,14 @@ function datables_enqueue_scripts() {
 
     $departures_platform_url = esc_url(get_option('datables_departures_platform_url'));
     $arrivals_platform_url = esc_url(get_option('datables_arrivals_platform_url'));
-    $api_key = esc_attr(get_option('datables_api_key'));
+    $departures_api_key = esc_attr(get_option('datables_departures_api_key'));
+    $arrivals_api_key = esc_attr(get_option('datables_arrivals_api_key'));
     
     wp_localize_script('datables-script', 'datablesData', array(
         'departuresPlatformUrl' => $departures_platform_url,
         'arrivalsPlatformUrl' => $arrivals_platform_url,
-        'apiKey' => $api_key
+        'departuresApiKey' => $departures_api_key,
+        'arrivalsApiKey' => $arrivals_api_key
     ));
 }
 add_action('wp_enqueue_scripts', 'datables_enqueue_scripts');

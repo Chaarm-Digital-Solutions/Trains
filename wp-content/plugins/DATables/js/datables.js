@@ -10,7 +10,8 @@ jQuery(document).ready(function ($)
         var arrivalsCrs = arrivalsTable.data('crs');
         var arrivalsPlatformUrl = datablesData.arrivalsPlatformUrl;
 
-        var apiKey = datablesData.apiKey;
+        var departuresApiKey = datablesData.departuresApiKey;
+        var arrivalsApiKey = datablesData.arrivalsApiKey;
 
         var dataTableConfigDepatrures = 
         {
@@ -22,7 +23,7 @@ jQuery(document).ready(function ($)
                 'type': 'GET',
                 'beforeSend': function(xhr)
                 {
-                    xhr.setRequestHeader('x-apikey', apiKey)
+                    xhr.setRequestHeader('x-apikey', departuresApiKey)
                 }
             },
             columns: 
@@ -52,7 +53,7 @@ jQuery(document).ready(function ($)
                 'type': 'GET',
                 'beforeSend': function(xhr)
                 {
-                    xhr.setRequestHeader('x-apikey', apiKey)
+                    xhr.setRequestHeader('x-apikey', arrivalsApiKey)
                 }
             },
             columns: 
