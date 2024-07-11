@@ -16,7 +16,7 @@ jQuery(document).ready(function ($)
         var dataTableConfigDepatrures = 
         {
             processing: true,
-            serverSide: true,
+            serverSide: false,
             ajax: 
             {
                 'url': departuresPlatformUrl + '/api/20220120/GetDepBoardWithDetails/' + departuresCrs + '?numRows=10&filterType=to&timeOffset=0&timeWindow=120',
@@ -32,8 +32,20 @@ jQuery(document).ready(function ($)
             },
             columns: 
             [
-                { data: 'operatorCode', title: 'Operator' },
-                { data: 'std', title: 'Due' },
+                { 
+                    data: null, 
+                    title: 'Operator',
+                    render: function(data, type, row) {
+                        return data.operatorCode || '';
+                    }
+                },
+                { 
+                    data: null, 
+                    title: 'Due',
+                    render: function(data, type, row) {
+                        return data.std || '';
+                    }
+                },
                 { 
                     data: null, 
                     title: 'Destination',
@@ -41,12 +53,32 @@ jQuery(document).ready(function ($)
                         return data.destination[0].locationName + (data.destination[0].via ? ' ' + data.destination[0].via : '');
                     }
                 },
-                { data: 'platform', title: 'Platform' },
-                { data: 'etd', title: 'Expected' },
-                { data: 'length', title: 'Coaches' },
+                { 
+                    data: null, 
+                    title: 'Platform',
+                    render: function(data, type, row) {
+                        return data.platform || '';
+                    }
+                },
+                { 
+                    data: null, 
+                    title: 'Expected',
+                    render: function(data, type, row) {
+                        return data.etd || '';
+                    }
+                },
+                { 
+                    data: null, 
+                    title: 'Coaches',
+                    render: function(data, type, row) {
+                        return data.length || '';
+                    }
+                },
             ],
+            paging: false,
+            info: false,
             pageLength: 25,
-            dom: 'Bfrtip',
+            dom: 'Bfrti',
             order: [[0, 'asc']], // Sort by the chosen column and direction (asc/desc, zero-based index)
             responsive: true
         };
@@ -72,8 +104,20 @@ jQuery(document).ready(function ($)
             },
             columns: 
             [
-                { data: 'operatorCode', title: 'Operator' },
-                { data: 'sta', title: 'Due' },
+                { 
+                    data: null, 
+                    title: 'Operator',
+                    render: function(data, type, row) {
+                        return data.operatorCode || '';
+                    }
+                },
+                { 
+                    data: null, 
+                    title: 'Due',
+                    render: function(data, type, row) {
+                        return data.sta || '';
+                    }
+                },
                 { 
                     data: null, 
                     title: 'Origin',
@@ -81,12 +125,32 @@ jQuery(document).ready(function ($)
                         return data.origin[0].locationName;
                     }
                 },
-                { data: 'platform', title: 'Platform' },
-                { data: 'eta', title: 'Expected' },
-                { data: 'length', title: 'Coaches' },
+                { 
+                    data: null, 
+                    title: 'Platform',
+                    render: function(data, type, row) {
+                        return data.platform || '';
+                    }
+                },
+                { 
+                    data: null, 
+                    title: 'Expected',
+                    render: function(data, type, row) {
+                        return data.eta || '';
+                    }
+                },
+                { 
+                    data: null, 
+                    title: 'Coaches',
+                    render: function(data, type, row) {
+                        return data.length || '';
+                    }
+                },
             ],
+            paging: false,
+            info: false,
             pageLength: 25,
-            dom: 'Bfrtip',
+            dom: 'Bfrti',
             order: [[0, 'asc']], // Sort by the chosen column and direction (asc/desc, zero-based index)
             responsive: true
         };
